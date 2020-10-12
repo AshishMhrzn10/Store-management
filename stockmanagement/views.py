@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Stock
-from.forms import StockCreateForm
+from.forms import StockCreateForm, StockSearchForm
 
 
 def home(request):
@@ -12,10 +12,15 @@ def home(request):
 
 
 def list_item(request):
-    title = "List"
-    queryset = Stock.objects.all()
+    header = "List of Items"
+    form = StockSearchForm(request.POST or None)
+    if request.method == 'POST':
+        queryset = Stock.objects.filter(category__icontains=form['category'].value(), item_name__icontains=form['item_name'].value())
+    else:
+        queryset = Stock.objects.all()
     context = {
-        'title': title,
+        "form": form,
+        'header': header,
         'queryset': queryset
     }
     return render(request, 'list_items.html', context)
