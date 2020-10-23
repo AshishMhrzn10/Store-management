@@ -69,6 +69,8 @@
                 <th>CATEGORY</th>
                 <th>ITEM NAME</th>
                 <th>QUANTITY IN STORE</th>
+                <th>TIMESTAMP</th>
+                <th>LAST UPDATED</th>
                 <th>Delete</th>
               </tr>
               {% for instance in queryset %}
@@ -81,6 +83,8 @@
                   >
                 </td>
                 <td>{{instance.quantity}}</td>
+                <td>{{instance.timestamp}}</td>
+                <td>{{instance.last_updated}}</td>
                 <td>
                   <a href="{% url 'delete_items' instance.id %}"
                     ><img
