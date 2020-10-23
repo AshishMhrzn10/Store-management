@@ -11,9 +11,9 @@ class StockCreateForm(forms.ModelForm):
         category = self.cleaned_data.get('category')
         if not category:
             raise forms.ValidationError('This field is required')
-        for instance in Stock.objects.all():
-            if instance.category == category:
-                raise forms.ValidationError(category + ' is already taken.')
+        # for instance in Stock.objects.all():
+        #     if instance.category == category:
+        #         raise forms.ValidationError(category + ' is already taken.')
         return category
 
     def clean_item_name(self):

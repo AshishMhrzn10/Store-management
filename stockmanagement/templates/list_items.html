@@ -45,6 +45,15 @@
   <body>
     {% include 'navbar.html' %}
     <main role="main" class="container">
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %}class="{{message.tags}}" {% endif %}>
+          {{message}}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
       <div class="jumbotron">
         <div class="header">{{header}}</div>
         <form method="POST" action="">
@@ -66,9 +75,19 @@
               <tr>
                 <td>{{forloop.counter}}</td>
                 <td>{{instance.category}}</td>
-                <td><a href="{% url 'update_items' instance.id %}">{{instance.item_name}}</a></td>
+                <td>
+                  <a href="{% url 'update_items' instance.id %}"
+                    >{{instance.item_name}}</a
+                  >
+                </td>
                 <td>{{instance.quantity}}</td>
-                <td><a href="{% url 'delete_items' instance.id %}"><img src="{% static 'images/del.png' %}" style="height: 15px;"></a></td>
+                <td>
+                  <a href="{% url 'delete_items' instance.id %}"
+                    ><img
+                      src="{% static 'images/del.png' %}"
+                      style="height: 15px"
+                  /></a>
+                </td>
               </tr>
               {% endfor %}
             </thead>

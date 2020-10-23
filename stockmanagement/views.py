@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import csv
@@ -43,6 +44,7 @@ def add_items(request):
     form = StockCreateForm(request.POST or None)
     if form.is_valid():
         form.save()
+        messages.success(request, 'Item added successfully')
         return redirect('/list_items')
     context = {
         "form": form,
@@ -55,9 +57,11 @@ def update_items(request, pk):
     queryset = Stock.objects.get(id=pk)
     form = StockUpdateForm(instance=queryset)
     if request.method == 'POST':
-        queryset = StockUpdateForm(request.POST, instance=queryset)
+        form = StockUpdateForm(request.POST, instance=queryset)
         if form.is_valid():
+            print("dsfsd")
             form.save()
+            messages.success(request, 'Item updated successfully')
             return redirect('/list_items')
     context = {
         "form": form,
@@ -69,5 +73,6 @@ def delete_items(request, pk):
     queryset = Stock.objects.get(id=pk)
     if request.method == 'POST':
         queryset.delete()
+        messages.success(request, 'Item deleted successfully')
         return redirect('/list_items')
     return render(request, 'delete_items.html')
